@@ -8,80 +8,57 @@ Full Documentation can be found [here](https://ahmednafies.github.io/go-covid/)
 
 ## How to install
 
-    go install go-covid
+    go get -u github.com/ahmednafies/go-covid/covid
 
 ## How to use
 
 ### Get All Data
 
-    covid = Covid()
-    covid.get_data()
+    data := covid.GetData()
+    fmt.Println(data)
+
+### Get Status By Country Name
+
+    data := covid.GetCountryByName("italy")
+    fmt.Println(data.Attrs.Id)
+    fmt.Println(data.Attrs.Country)
+    fmt.Println(data.Attrs.LastUpdate)
+    fmt.Println(data.Attrs.Confirmed)
+    fmt.Println(data.Attrs.Deaths)
+    fmt.Println(data.Attrs.Active)
+    fmt.Println(data.Attrs.Recovered)
+    fmt.Println(data.Attrs.Latitude)
+    fmt.Println(data.Attrs.Longitude)
 
 #### Result
 
-    [
-        {
-            'country': 'Mainland China',
-            'confirmed': 80756,
-            'deaths': 3136,
-            'recovered': 60096,
-            'latitude': 30.5928,
-            'longitude': 114.3055,
-            'last_update': 1582264984000
-        },
-        {
-            'country': 'Italy',
-            'confirmed': 9172,
-            'deaths': 463,
-            'recovered': 724,
-            'latitude': 43.0,
-            'longitude': 12.0,
-            'last_update': 1583777591000
-        },
-        ...
-
-### Get Status By Country
-
-    covid.get_status_by_country("sweden")
-
-#### Result
-
-    {
-        'country': 'Sweden',
-        'confirmed': 355,
-        'deaths': 0,
-        'recovered': 1,
-        'latitude': 63.0,
-        'longitude': 16.0,
-        'last_update': 1583893094000
-    }
+    113
+    Italy
+    1584216796000
+    21157
+    1441
+    17750
+    1966
+    41.8719
 
 ### List Countries
 
-This comes in handy when you need to know the available names of countries
-when using `get_status_by_country`, eg. "The Republic of Moldova" or just "Moldova"
-So use this when you need to know the country exact name that you can use.
-
-    covid.list_countries()
+    covid.ListCountries()
 
 #### Result
 
     [
-        "china",
-        "italy",
-        "iran",
-        "republic of korea",
+        Attrs{
+            Id: 40
+            Name: Hungary
+        },
+        Attrs{
+            Id: 113
+            Name: Italy
+        }
         ...
     ]
 
-### Get Total Confirmed cases
+### Get Status by Country ID
 
-    confirmed = covid.get_total_confirmed_cases()
-
-### Get Total Recovered cases
-
-    recovered = covid.get_total_recovered()
-
-### Get Total Deaths
-
-    deaths = covid.get_total_deaths()
+    data := covid.GetCountryById("italy")

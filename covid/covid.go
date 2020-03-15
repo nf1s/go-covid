@@ -16,15 +16,15 @@ type Response struct {
 }
 type Case struct {
 	Attrs struct {
-		Id        int     `json:"OBJECTID"`
-		Country   string  `json:"Country_Region"`
-		Updated   int     `json:"Last_Update"`
-		Latitude  float64 `json:"Lat"`
-		Longitude float64 `json:"Long_"`
-		Confirmed int     `json:"Confirmed"`
-		Active    int     `json:"Active"`
-		Recovered int     `json:"Recovered"`
-		Deaths    int     `json:"Deaths"`
+		Id         int     `json:"OBJECTID"`
+		Country    string  `json:"Country_Region"`
+		LastUpdate int     `json:"Last_Update"`
+		Latitude   float64 `json:"Lat"`
+		Longitude  float64 `json:"Long_"`
+		Confirmed  int     `json:"Confirmed"`
+		Active     int     `json:"Active"`
+		Recovered  int     `json:"Recovered"`
+		Deaths     int     `json:"Deaths"`
 	} `json:"attributes"`
 }
 
@@ -130,7 +130,7 @@ func ListCountries() []Country {
 	return res.Values
 }
 
-func GetCountryId(name string) (int, error) {
+func getCountryId(name string) (int, error) {
 	countries := ListCountries()
 	for _, country := range countries {
 		if strings.ToLower(country.Attrs.Name) == strings.ToLower(name) {
@@ -141,7 +141,7 @@ func GetCountryId(name string) (int, error) {
 }
 
 func GetCountryByName(name string) Case {
-	id, err := GetCountryId(name)
+	id, err := getCountryId(name)
 	if err != nil {
 		log.Fatalln(err)
 	}

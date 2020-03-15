@@ -1,0 +1,9 @@
+site_name: go-covid
+nav:
+  - Getting Started: index.md
+  - Install: install.md
+  - Examples: examples.md
+theme:
+  name: "material"
+  palette:
+    primary: "red"

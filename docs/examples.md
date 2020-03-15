@@ -1,16 +1,4 @@
-# go-covid
-
-## Description
-
-Go Package to get information regarding the novel corona virus provided by Johns Hopkins university
-
-Full Documentation can be found [here](https://ahmednafies.github.io/go-covid/)
-
-## How to install
-
-    go get -u github.com/ahmednafies/go-covid/covid
-
-## How to use
+# Usage
 
 ### Get All Data
 

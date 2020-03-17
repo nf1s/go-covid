@@ -3,6 +3,7 @@ package covid
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -38,6 +39,15 @@ type Country struct {
 		Name string `json:"Country_Region"`
 	} `json:"attributes"`
 }
+type StatsResponse struct {
+	Values []Stats `json:"features"`
+}
+
+type Stats struct {
+	Attrs struct {
+		Value int `json:"value"`
+	} `json:"attributes"`
+}
 
 func getAllUrl() string {
 	_url, _ := url.Parse("https://services1.arcgis.com")
@@ -68,6 +78,21 @@ func getCountryUrl(id int) string {
 	parameters.Add("orderByFields", "Confirmed desc")
 	parameters.Add("resultOffset", "0")
 	parameters.Add("resultRecordCount", "200")
+	parameters.Add("cacheHint", "true")
+	_url.RawQuery = parameters.Encode()
+	return _url.String()
+}
+
+func getTotalUrl(field string) string {
+	_url, _ := url.Parse("https://services1.arcgis.com")
+	_url.Path += "/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query"
+	parameters := url.Values{}
+	parameters.Add("f", "json")
+	parameters.Add("where", "Confirmed > 0")
+	parameters.Add("returnGeometry", "false")
+	parameters.Add("spatialRel", "esriSpatialRelIntersects")
+	parameters.Add("outFields", "*")
+	parameters.Add("outStatistics", fmt.Sprintf("[{\"statisticType\":\"sum\",\"onStatisticField\":\"%s\",\"outStatisticFieldName\":\"value\"}]", field))
 	parameters.Add("cacheHint", "true")
 	_url.RawQuery = parameters.Encode()
 	return _url.String()
@@ -162,4 +187,41 @@ func GetCountryByName(name string) Case {
 	}
 
 	return res.Values[0]
+}
+
+func getTotal(field string) Stats {
+	resp, err := http.Get(getTotalUrl(field))
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	var res StatsResponse
+	json.Unmarshal(body, &res)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return res.Values[0]
+}
+
+func GetTotalActive() int {
+	data := getTotal("Active")
+	return data.Attrs.Value
+}
+
+func GetTotalConfirmed() int {
+	data := getTotal("Confirmed")
+	return data.Attrs.Value
+}
+func GetTotalRecovered() int {
+	data := getTotal("Recovered")
+	return data.Attrs.Value
+}
+func GetTotalDeaths() int {
+	data := getTotal("Deaths")
+	return data.Attrs.Value
 }

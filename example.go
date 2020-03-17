@@ -16,4 +16,15 @@ func main() {
 	fmt.Println(data.Attrs.Recovered)
 	fmt.Println(data.Attrs.Latitude)
 	fmt.Println(data.Attrs.Longitude)
+
+	active := covid.GetTotalActive()
+	confirmed := covid.GetTotalConfirmed()
+	recovered := covid.GetTotalRecovered()
+	deaths := covid.GetTotalDeaths()
+
+	fmt.Println(active)
+	fmt.Println(confirmed)
+	fmt.Println(recovered)
+	fmt.Println(deaths)
+
 }

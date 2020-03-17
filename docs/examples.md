@@ -50,3 +50,19 @@
 ### Get Status by Country ID
 
     data := covid.GetCountryById(113)
+
+### Get Total Active Cases
+
+    active := covid.GetTotalActive()
+
+### Get Total Confirmed Cases
+
+    confirmed := covid.GetTotalConfirmed()
+
+### Get Total Recovered Cases
+
+    recovered := covid.GetTotalRecovered()
+
+### Get Total Deaths
+
+    deaths := covid.GetTotalDeaths()

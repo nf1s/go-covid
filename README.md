@@ -1,5 +1,7 @@
 # go-covid
 
+[![CircleCI](https://circleci.com/gh/ahmednafies/go-covid.svg?style=shield)](https://circleci.com/gh/ahmednafies/go-covid) [![codecov](https://codecov.io/gh/ahmednafies/go-covid/branch/master/graph/badge.svg)](https://codecov.io/gh/ahmednafies/go-covid)
+
 ## Description
 
 Go Package to get information regarding the novel corona virus provided by Johns Hopkins university

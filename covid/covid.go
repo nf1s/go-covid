@@ -108,6 +108,8 @@ func GetData() []Case {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	defer resp.Body.Close()
+
 	var res Response
 	json.Unmarshal(body, &res)
 	if err != nil {
@@ -127,6 +129,8 @@ func GetCountryById(id int) Case {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	defer resp.Body.Close()
+
 	var res Response
 	json.Unmarshal(body, &res)
 	if err != nil {
@@ -146,6 +150,8 @@ func ListCountries() []Country {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	defer resp.Body.Close()
+
 	var res CountryResponse
 	json.Unmarshal(body, &res)
 	if err != nil {
@@ -180,6 +186,8 @@ func GetCountryByName(name string) Case {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	defer resp.Body.Close()
+
 	var res Response
 	json.Unmarshal(body, &res)
 	if err != nil {
@@ -199,6 +207,8 @@ func getTotal(field string) Stats {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	defer resp.Body.Close()
+
 	var res StatsResponse
 	json.Unmarshal(body, &res)
 	if err != nil {

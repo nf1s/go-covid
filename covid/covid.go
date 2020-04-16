@@ -97,6 +97,7 @@ func getTotalUrl(field string) string {
 	return _url.String()
 }
 
+// GetData returns the entire data of every country
 func GetData() ([]Case, error) {
 	resp, err := http.Get(getAllUrl())
 	if err != nil {
@@ -110,7 +111,7 @@ func GetData() ([]Case, error) {
 	defer resp.Body.Close()
 
 	var res Response
-	json.Unmarshal(body, &res)
+	err = json.Unmarshal(body, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -118,6 +119,8 @@ func GetData() ([]Case, error) {
 	return res.Values, nil
 }
 
+// GetCountryById returns the statistics/data of
+// a particular country specified by id
 func GetCountryById(id int) (Case, error) {
 	resp, err := http.Get(getCountryUrl(id))
 	if err != nil {
@@ -139,6 +142,10 @@ func GetCountryById(id int) (Case, error) {
 	return res.Values[0], nil
 }
 
+// ListCountries returns a "list" or slice of countries, that shows the id and name
+// of a country as understood by this api. This method is handy when you want
+// the ID or name of a country to use with methods GetCountryById and GetCountryByName
+// respectively
 func ListCountries() ([]Country, error) {
 	resp, err := http.Get(getAllUrl())
 	if err != nil {
@@ -174,6 +181,8 @@ func getCountryId(name string) (int, error) {
 	return -1, errors.New("Wrong country name")
 }
 
+// GetCountryByName returns the statistics/data of
+// a particular country as supplied by name
 func GetCountryByName(name string) (Case, error) {
 	id, err := getCountryId(name)
 	if err != nil {
@@ -221,6 +230,7 @@ func getTotal(field string) (Stats, error) {
 	return res.Values[0], nil
 }
 
+// GetTotalActive returns the total number of active cases globally
 func GetTotalActive() (int, error) {
 	data, err := getTotal("Active")
 	if err != nil {
@@ -229,6 +239,8 @@ func GetTotalActive() (int, error) {
 	return data.Attrs.Value, nil
 }
 
+
+// GetTotalConfirmed returns the total number of confirmed cases globally
 func GetTotalConfirmed() (int, error) {
 	data, err := getTotal("Confirmed")
 	if err != nil {
@@ -236,6 +248,8 @@ func GetTotalConfirmed() (int, error) {
 	}
 	return data.Attrs.Value, err
 }
+
+// GetTotalRecovered returns the total number of recovered cases globally
 func GetTotalRecovered() (int, error) {
 	data, err := getTotal("Recovered")
 	if err != nil {
@@ -243,6 +257,8 @@ func GetTotalRecovered() (int, error) {
 	}
 	return data.Attrs.Value, nil
 }
+
+// GetTotalDeaths returns the total number of deaths recorded globally
 func GetTotalDeaths() (int, error) {
 	data, err := getTotal("Deaths")
 	if err != nil {

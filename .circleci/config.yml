@@ -19,7 +19,7 @@ jobs:
       - run:
           command: |
             cd covid && go test -v -coverprofile=c.out
-            go tool cover -html=c.out -o coverage.html
+            go tool cover -html=covid/c.out -o coverage.html
             mv coverage.html /tmp/artifacts
       - store_artifacts:
           path: /tmp/artifacts

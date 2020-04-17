@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">go-covid/covid/covid.go (82.5%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package covid
+
+import (
+        "encoding/json"
+        "errors"
+        "fmt"
+        "io/ioutil"
+        "net/http"
+        "net/url"
+        "strconv"
+        "strings"
+)
+
+var BaseUrl = "https://services1.arcgis.com"
+
+var Path = "/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query"
+
+type Response struct {
+        Values []Case `json:"features"`
+}
+type Case struct {
+        Attrs struct {
+                Id         int     `json:"OBJECTID"`
+                Country    string  `json:"Country_Region"`
+                LastUpdate int     `json:"Last_Update"`
+                Latitude   float64 `json:"Lat"`
+                Longitude  float64 `json:"Long_"`
+                Confirmed  int     `json:"Confirmed"`
+                Active     int     `json:"Active"`
+                Recovered  int     `json:"Recovered"`
+                Deaths     int     `json:"Deaths"`
+        } `json:"attributes"`
+}
+
+type CountryResponse struct {
+        Values []Country `json:"features"`
+}
+
+type Country struct {
+        Attrs struct {
+                Id   int    `json:"OBJECTID"`
+                Name string `json:"Country_Region"`
+        } `json:"attributes"`
+}
+type StatsResponse struct {
+        Values []Stats `json:"features"`
+}
+
+type Stats struct {
+        Attrs struct {
+                Value int `json:"value"`
+        } `json:"attributes"`
+}
+
+func getAllUrl() string <span class="cov8" title="1">{
+        _url, _ := url.Parse(BaseUrl)
+        _url.Path += Path
+        parameters := url.Values{}
+        parameters.Add("f", "json")
+        parameters.Add("where", "Confirmed &gt; 0")
+        parameters.Add("returnGeometry", "false")
+        parameters.Add("spatialRel", "esriSpatialRelIntersects")
+        parameters.Add("outFields", "*")
+        parameters.Add("orderByFields", "Confirmed desc")
+        parameters.Add("resultOffset", "0")
+        parameters.Add("resultRecordCount", "200")
+        parameters.Add("cacheHint", "true")
+        _url.RawQuery = parameters.Encode()
+        return _url.String()
+}</span>
+
+func getCountryUrl(id int) string <span class="cov8" title="1">{
+        _url, _ := url.Parse(BaseUrl)
+        _url.Path += Path
+        parameters := url.Values{}
+        parameters.Add("f", "json")
+        parameters.Add("where", "OBJECTID ="+strconv.Itoa(id))
+        parameters.Add("returnGeometry", "false")
+        parameters.Add("spatialRel", "esriSpatialRelIntersects")
+        parameters.Add("outFields", "*")
+        parameters.Add("orderByFields", "Confirmed desc")
+        parameters.Add("resultOffset", "0")
+        parameters.Add("resultRecordCount", "200")
+        parameters.Add("cacheHint", "true")
+        _url.RawQuery = parameters.Encode()
+        return _url.String()
+}</span>
+
+func getTotalUrl(field string) string <span class="cov8" title="1">{
+        _url, _ := url.Parse(BaseUrl)
+        _url.Path += Path
+        parameters := url.Values{}
+        parameters.Add("f", "json")
+        parameters.Add("where", "Confirmed &gt; 0")
+        parameters.Add("returnGeometry", "false")
+        parameters.Add("spatialRel", "esriSpatialRelIntersects")
+        parameters.Add("outFields", "*")
+        parameters.Add("outStatistics", fmt.Sprintf("[{\"statisticType\":\"sum\",\"onStatisticField\":\"%s\",\"outStatisticFieldName\":\"value\"}]", field))
+        parameters.Add("cacheHint", "true")
+        _url.RawQuery = parameters.Encode()
+        return _url.String()
+}</span>
+
+// GetData returns the entire data of every country
+func GetData() ([]Case, error) <span class="cov8" title="1">{
+        resp, err := http.Get(getAllUrl())
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">body, err := ioutil.ReadAll(resp.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">defer resp.Body.Close()
+
+        var res Response
+        err = json.Unmarshal(body, &amp;res)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">return res.Values, nil</span>
+}
+
+// GetCountryById returns the statistics/data of
+// a particular country specified by id
+func GetCountryById(id int) (Case, error) <span class="cov8" title="1">{
+        resp, err := http.Get(getCountryUrl(id))
+        if err != nil </span><span class="cov0" title="0">{
+                return Case{}, err
+        }</span>
+
+        <span class="cov8" title="1">body, err := ioutil.ReadAll(resp.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                return Case{}, err
+        }</span>
+        <span class="cov8" title="1">defer resp.Body.Close()
+
+        var res Response
+        err = json.Unmarshal(body, &amp;res)
+        if err != nil </span><span class="cov0" title="0">{
+                return Case{}, err
+        }</span>
+
+        <span class="cov8" title="1">return res.Values[0], nil</span>
+}
+
+// ListCountries returns a "list" or slice of countries, that shows the id and name
+// of a country as understood by this api. This method is handy when you want
+// the ID or name of a country to use with methods GetCountryById and GetCountryByName
+// respectively
+func ListCountries() ([]Country, error) <span class="cov8" title="1">{
+        resp, err := http.Get(getAllUrl())
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">body, err := ioutil.ReadAll(resp.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">defer resp.Body.Close()
+
+        var res CountryResponse
+        err = json.Unmarshal(body, &amp;res)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">return res.Values, nil</span>
+}
+
+func getCountryId(name string) (int, error) <span class="cov8" title="1">{
+        countries, err := ListCountries()
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+
+        <span class="cov8" title="1">for _, country := range countries </span><span class="cov8" title="1">{
+                if strings.ToLower(country.Attrs.Name) == strings.ToLower(name) </span><span class="cov8" title="1">{
+                        return country.Attrs.Id, nil
+                }</span>
+        }
+        <span class="cov0" title="0">return -1, errors.New("Wrong country name")</span>
+}
+
+// GetCountryByName returns the statistics/data of
+// a particular country as supplied by name
+func GetCountryByName(name string) (Case, error) <span class="cov8" title="1">{
+        id, err := getCountryId(name)
+        if err != nil </span><span class="cov0" title="0">{
+                return Case{}, err
+        }</span>
+
+        <span class="cov8" title="1">resp, err := http.Get(getCountryUrl(id))
+        if err != nil </span><span class="cov0" title="0">{
+                return Case{}, err
+        }</span>
+
+        <span class="cov8" title="1">body, err := ioutil.ReadAll(resp.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                return Case{}, err
+        }</span>
+        <span class="cov8" title="1">defer resp.Body.Close()
+
+        var res Response
+        err = json.Unmarshal(body, &amp;res)
+        if err != nil </span><span class="cov0" title="0">{
+                return Case{}, err
+        }</span>
+
+        <span class="cov8" title="1">return res.Values[0], nil</span>
+}
+
+func getTotal(field string) (Stats, error) <span class="cov8" title="1">{
+        resp, err := http.Get(getTotalUrl(field))
+        if err != nil </span><span class="cov0" title="0">{
+                return Stats{}, err
+        }</span>
+
+        <span class="cov8" title="1">body, err := ioutil.ReadAll(resp.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                return Stats{}, err
+        }</span>
+        <span class="cov8" title="1">defer resp.Body.Close()
+
+        var res StatsResponse
+        err = json.Unmarshal(body, &amp;res)
+        if err != nil </span><span class="cov0" title="0">{
+                return Stats{}, err
+        }</span>
+
+        <span class="cov8" title="1">return res.Values[0], nil</span>
+}
+
+// GetTotalActive returns the total number of active cases globally
+func GetTotalActive() (int, error) <span class="cov8" title="1">{
+        data, err := getTotal("Active")
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+        <span class="cov8" title="1">return data.Attrs.Value, nil</span>
+}
+
+
+// GetTotalConfirmed returns the total number of confirmed cases globally
+func GetTotalConfirmed() (int, error) <span class="cov8" title="1">{
+        data, err := getTotal("Confirmed")
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+        <span class="cov8" title="1">return data.Attrs.Value, err</span>
+}
+
+// GetTotalRecovered returns the total number of recovered cases globally
+func GetTotalRecovered() (int, error) <span class="cov8" title="1">{
+        data, err := getTotal("Recovered")
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+        <span class="cov8" title="1">return data.Attrs.Value, nil</span>
+}
+
+// GetTotalDeaths returns the total number of deaths recorded globally
+func GetTotalDeaths() (int, error) <span class="cov8" title="1">{
+        data, err := getTotal("Deaths")
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+        <span class="cov8" title="1">return data.Attrs.Value, nil</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

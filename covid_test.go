@@ -19,6 +19,7 @@ func TestGetCountryByName(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	assert.IsType(t, _int, data.Attrs.Id)
 	assert.IsType(t, _string, data.Attrs.Country)
 	assert.IsType(t, _int, data.Attrs.LastUpdate)
@@ -39,6 +40,7 @@ func TestGetCountryById(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	assert.IsType(t, _int, data.Attrs.Id)
 	assert.IsType(t, _string, data.Attrs.Country)
 	assert.IsType(t, _int, data.Attrs.LastUpdate)
@@ -85,6 +87,7 @@ func TestGetTotalActive(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	assert.IsType(t, _int, result)
 
 }
@@ -93,6 +96,7 @@ func TestGetTotalConfirmed(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	assert.IsType(t, _int, result)
 
 }
@@ -102,6 +106,7 @@ func TestGetTotalRecovered(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	assert.IsType(t, _int, result)
 
 }
@@ -111,6 +116,7 @@ func TestGetTotalDeaths(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	assert.IsType(t, _int, result)
 
 }

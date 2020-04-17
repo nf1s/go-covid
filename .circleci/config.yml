@@ -10,10 +10,9 @@ jobs:
       - checkout
       - run:
         name: "install dep"
-        command: go get -u github.com/golang/dep/cmd/dep
-      - run:
-        name: "install packages"
-        command: dep ensure
+        command: | 
+        go get -u github.com/golang/dep/cmd/dep
+        dep ensure
       - run:
           name: "Create a temp directory for artifacts"
           command: |

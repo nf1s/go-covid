@@ -9,8 +9,9 @@ jobs:
     steps:
       - checkout
       - run:
-        name: "install dependencies"
-        command: go mod download
+          name: "install dependencies"
+          command: |
+            go mod download
       - run:
           name: "Create a temp directory for artifacts"
           command: |

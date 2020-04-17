@@ -7,19 +7,27 @@ Go Package to get information regarding the novel corona virus provided by Johns
 Full Documentation can be found [here](https://ahmednafies.github.io/go-covid/)
 
 ## How to install
-
     go get -u github.com/ahmednafies/go-covid/covid
 
 ## How to use
 
 ### Get All Data
 
-    data := covid.GetData()
+
+    data, err := covid.GetData()
+    if err != nil {
+        // Handle error here
+    }
     fmt.Println(data)
+
 
 ### Get Status By Country Name
 
-    data := covid.GetCountryByName("italy")
+    data, err := covid.GetCountryByName("italy")
+    if err != nil {
+        // Handle error here
+    }
+
     fmt.Println(data.Attrs.Id)
     fmt.Println(data.Attrs.Country)
     fmt.Println(data.Attrs.LastUpdate)
@@ -43,7 +51,10 @@ Full Documentation can be found [here](https://ahmednafies.github.io/go-covid/)
 
 ### List Countries
 
-    covid.ListCountries()
+    list, err := covid.ListCountries()
+    if err != nil {
+        // Handle error here
+    }
 
 #### Result
 
@@ -61,20 +72,20 @@ Full Documentation can be found [here](https://ahmednafies.github.io/go-covid/)
 
 ### Get Status by Country ID
 
-    data := covid.GetCountryById(113)
+    data, err := covid.GetCountryById(113)
 
 ### Get Total Active Cases
 
-    active := covid.GetTotalActive()
+    active, err := covid.GetTotalActive()
 
 ### Get Total Confirmed Cases
 
-    confirmed := covid.GetTotalConfirmed()
+    confirmed, err := covid.GetTotalConfirmed()
 
 ### Get Total Recovered Cases
 
-    recovered := covid.GetTotalRecovered()
+    recovered, err := covid.GetTotalRecovered()
 
 ### Get Total Deaths
 
-    deaths := covid.GetTotalDeaths()
+    deaths, err := covid.GetTotalDeaths()

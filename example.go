@@ -6,7 +6,10 @@ import (
 )
 
 func main() {
-	data := covid.GetCountryByName("italy")
+	data, err := covid.GetCountryByName("italy")
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println(data.Attrs.Id)
 	fmt.Println(data.Attrs.Country)
 	fmt.Println(data.Attrs.LastUpdate)
@@ -17,10 +20,22 @@ func main() {
 	fmt.Println(data.Attrs.Latitude)
 	fmt.Println(data.Attrs.Longitude)
 
-	active := covid.GetTotalActive()
-	confirmed := covid.GetTotalConfirmed()
-	recovered := covid.GetTotalRecovered()
-	deaths := covid.GetTotalDeaths()
+	active, err := covid.GetTotalActive()
+	if err != nil {
+		fmt.Println(err)
+	}
+	confirmed, err := covid.GetTotalConfirmed()
+	if err != nil {
+		fmt.Println(err)
+	}
+	recovered, err := covid.GetTotalRecovered()
+	if err != nil {
+		fmt.Println(err)
+	}
+	deaths, err := covid.GetTotalDeaths()
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	fmt.Println(active)
 	fmt.Println(confirmed)

@@ -442,62 +442,90 @@
                 
                 <h1 id="usage">Usage</h1>
 <h3 id="get-all-data">Get All Data</h3>
-<pre><code>data := covid.GetData()
-fmt.Println(data)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">covid</span><span class="p">.</span><span class="nx">GetData</span><span class="p">()</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+    <span class="c1">// Handle error here</span>
+<span class="p">}</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+</code></pre></div>
+
+
 <h3 id="get-status-by-country-name">Get Status By Country Name</h3>
-<pre><code>data := covid.GetCountryByName("italy")
-fmt.Println(data.Attrs.Id)
-fmt.Println(data.Attrs.Country)
-fmt.Println(data.Attrs.LastUpdate)
-fmt.Println(data.Attrs.Confirmed)
-fmt.Println(data.Attrs.Deaths)
-fmt.Println(data.Attrs.Active)
-fmt.Println(data.Attrs.Recovered)
-fmt.Println(data.Attrs.Latitude)
-fmt.Println(data.Attrs.Longitude)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">covid</span><span class="p">.</span><span class="nx">GetCountryByName</span><span class="p">(</span><span class="s">&quot;italy&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+    <span class="c1">// Handle error here</span>
+<span class="p">}</span>
+
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">.</span><span class="nx">Id</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">.</span><span class="nx">Country</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">.</span><span class="nx">LastUpdate</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">.</span><span class="nx">Confirmed</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">.</span><span class="nx">Deaths</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">.</span><span class="nx">Active</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">.</span><span class="nx">Recovered</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">.</span><span class="nx">Latitude</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Attrs</span><span class="p">.</span><span class="nx">Longitude</span><span class="p">)</span>
+</code></pre></div>
+
+
 <h4 id="result">Result</h4>
-<pre><code>113
-Italy
-1584216796000
-21157
-1441
-17750
-1966
-41.8719
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="mi">113</span>
+<span class="nx">Italy</span>
+<span class="mi">1584216796000</span>
+<span class="mi">21157</span>
+<span class="mi">1441</span>
+<span class="mi">17750</span>
+<span class="mi">1966</span>
+<span class="mf">41.8719</span>
+</code></pre></div>
+
+
 <h3 id="list-countries">List Countries</h3>
-<pre><code>covid.ListCountries()
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">list</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">covid</span><span class="p">.</span><span class="nx">ListCountries</span><span class="p">()</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+    <span class="c1">// Handle error here</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <h4 id="result_1">Result</h4>
-<pre><code>[
-    Attrs{
-        Id: 40
-        Name: Hungary
-    },
-    Attrs{
-        Id: 113
-        Name: Italy
-    }
-    ...
-]
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">[</span>
+    <span class="nx">Attrs</span><span class="p">{</span>
+        <span class="nx">Id</span><span class="p">:</span> <span class="mi">40</span>
+        <span class="nx">Name</span><span class="p">:</span> <span class="nx">Hungary</span>
+    <span class="p">},</span>
+    <span class="nx">Attrs</span><span class="p">{</span>
+        <span class="nx">Id</span><span class="p">:</span> <span class="mi">113</span>
+        <span class="nx">Name</span><span class="p">:</span> <span class="nx">Italy</span>
+    <span class="p">}</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</code></pre></div>
+
+
 <h3 id="get-status-by-country-id">Get Status by Country ID</h3>
-<pre><code>data := covid.GetCountryById(113)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">covid</span><span class="p">.</span><span class="nx">GetCountryById</span><span class="p">(</span><span class="mi">113</span><span class="p">)</span>
+</code></pre></div>
+
+
 <h3 id="get-total-active-cases">Get Total Active Cases</h3>
-<pre><code>active := covid.GetTotalActive()
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">active</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">covid</span><span class="p">.</span><span class="nx">GetTotalActive</span><span class="p">()</span>
+</code></pre></div>
+
+
 <h3 id="get-total-confirmed-cases">Get Total Confirmed Cases</h3>
-<pre><code>confirmed := covid.GetTotalConfirmed()
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">confirmed</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">covid</span><span class="p">.</span><span class="nx">GetTotalConfirmed</span><span class="p">()</span>
+</code></pre></div>
+
+
 <h3 id="get-total-recovered-cases">Get Total Recovered Cases</h3>
-<pre><code>recovered := covid.GetTotalRecovered()
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">recovered</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">covid</span><span class="p">.</span><span class="nx">GetTotalRecovered</span><span class="p">()</span>
+</code></pre></div>
+
+
 <h3 id="get-total-deaths">Get Total Deaths</h3>
-<pre><code>deaths := covid.GetTotalDeaths()
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nx">deaths</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">covid</span><span class="p">.</span><span class="nx">GetTotalDeaths</span><span class="p">()</span>
+</code></pre></div>
                 
                   
                 

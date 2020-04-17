@@ -8,6 +8,8 @@ Full code on [github](https://github.com/ahmednafies/go-covid)
 
 ## How to use
 
-    import "github.com/ahmednafies/go-covid/covid"
+```go
+import "github.com/ahmednafies/go-covid/covid"
 
-    covid.GetData()
+covid.GetData()
+```

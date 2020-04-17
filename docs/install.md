@@ -1,3 +1,5 @@
 # Install
 
-    go get -u github.com/ahmednafies/go-covid/covid
+```bash
+go get -u github.com/ahmednafies/go-covid/covid
+```

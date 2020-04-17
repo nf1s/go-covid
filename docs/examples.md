@@ -2,67 +2,97 @@
 
 ### Get All Data
 
-    data := covid.GetData()
-    fmt.Println(data)
+```go
+data, err := covid.GetData()
+if err != nil {
+    // Handle error here
+}
+fmt.Println(data)
+```
 
 ### Get Status By Country Name
 
-    data := covid.GetCountryByName("italy")
-    fmt.Println(data.Attrs.Id)
-    fmt.Println(data.Attrs.Country)
-    fmt.Println(data.Attrs.LastUpdate)
-    fmt.Println(data.Attrs.Confirmed)
-    fmt.Println(data.Attrs.Deaths)
-    fmt.Println(data.Attrs.Active)
-    fmt.Println(data.Attrs.Recovered)
-    fmt.Println(data.Attrs.Latitude)
-    fmt.Println(data.Attrs.Longitude)
+```go
+data, err := covid.GetCountryByName("italy")
+if err != nil {
+    // Handle error here
+}
+
+fmt.Println(data.Attrs.Id)
+fmt.Println(data.Attrs.Country)
+fmt.Println(data.Attrs.LastUpdate)
+fmt.Println(data.Attrs.Confirmed)
+fmt.Println(data.Attrs.Deaths)
+fmt.Println(data.Attrs.Active)
+fmt.Println(data.Attrs.Recovered)
+fmt.Println(data.Attrs.Latitude)
+fmt.Println(data.Attrs.Longitude)
+```
 
 #### Result
 
-    113
-    Italy
-    1584216796000
-    21157
-    1441
-    17750
-    1966
-    41.8719
+```go
+113
+Italy
+1584216796000
+21157
+1441
+17750
+1966
+41.8719
+```
 
 ### List Countries
 
-    covid.ListCountries()
+```go
+list, err := covid.ListCountries()
+if err != nil {
+    // Handle error here
+}
+```
 
 #### Result
 
-    [
-        Attrs{
-            Id: 40
-            Name: Hungary
-        },
-        Attrs{
-            Id: 113
-            Name: Italy
-        }
-        ...
-    ]
+```go
+[
+    Attrs{
+        Id: 40
+        Name: Hungary
+    },
+    Attrs{
+        Id: 113
+        Name: Italy
+    }
+    ...
+]
+```
 
 ### Get Status by Country ID
 
-    data := covid.GetCountryById(113)
+```go
+data, err := covid.GetCountryById(113)
+```
 
 ### Get Total Active Cases
 
-    active := covid.GetTotalActive()
+```go
+active, err := covid.GetTotalActive()
+```
 
 ### Get Total Confirmed Cases
 
-    confirmed := covid.GetTotalConfirmed()
+```go
+confirmed, err := covid.GetTotalConfirmed()
+```
 
 ### Get Total Recovered Cases
 
-    recovered := covid.GetTotalRecovered()
+```go
+recovered, err := covid.GetTotalRecovered()
+```
 
 ### Get Total Deaths
 
-    deaths := covid.GetTotalDeaths()
+```go
+deaths, err := covid.GetTotalDeaths()
+```

@@ -3,11 +3,7 @@ orbs:
   codecov: codecov/codecov@1.0.5
 jobs:
   build:
-    working_directory: ~/go-covid
-    environment:
-      GOROOT: ""
-      PATH: "/usr/local/go/bin:/usr/local/go-covid/bin:~/.go-covid/bin:${PATH}"
-      GOPATH: "${HOME}/.go-covid:/usr/local/go-covid:${HOME}/.go_project"
+    working_directory: /go/src/go-covid
     docker:
       - image: circleci/golang:1.11
     steps:

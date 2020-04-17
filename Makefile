@@ -1,9 +1,9 @@
 test:
-	go test
+	cd covid && go test -v
 	
 
 test-coverage:
-	go test -coverprofile=c.out
+	cd covid && go test -v -coverprofile=c.out
     go tool cover -html=c.out -o coverage.html
 
 deploy-docs:

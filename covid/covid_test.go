@@ -1,8 +1,7 @@
-package main
+package covid
 
 import (
 	"fmt"
-	"go-covid/covid"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,7 +13,7 @@ var _float float64
 
 func TestGetCountryByName(t *testing.T) {
 
-	data, err := covid.GetCountryByName("italy")
+	data, err := GetCountryByName("italy")
 
 	if err != nil {
 		fmt.Println(err)
@@ -36,7 +35,7 @@ func TestGetCountryByName(t *testing.T) {
 
 func TestGetCountryById(t *testing.T) {
 
-	data, err := covid.GetCountryById(50)
+	data, err := GetCountryById(50)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -55,7 +54,7 @@ func TestGetCountryById(t *testing.T) {
 
 func TestGetAll(t *testing.T) {
 
-	all_data, err := covid.GetData()
+	all_data, err := GetData()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -72,8 +71,8 @@ func TestGetAll(t *testing.T) {
 
 }
 
-func ListCountries(t *testing.T) {
-	data, err := covid.ListCountries()
+func TestListCountries(t *testing.T) {
+	data, err := ListCountries()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -83,7 +82,7 @@ func ListCountries(t *testing.T) {
 }
 
 func TestGetTotalActive(t *testing.T) {
-	result, err := covid.GetTotalActive()
+	result, err := GetTotalActive()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -92,7 +91,7 @@ func TestGetTotalActive(t *testing.T) {
 
 }
 func TestGetTotalConfirmed(t *testing.T) {
-	result, err := covid.GetTotalConfirmed()
+	result, err := GetTotalConfirmed()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -102,7 +101,7 @@ func TestGetTotalConfirmed(t *testing.T) {
 }
 
 func TestGetTotalRecovered(t *testing.T) {
-	result, err := covid.GetTotalRecovered()
+	result, err := GetTotalRecovered()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -112,7 +111,7 @@ func TestGetTotalRecovered(t *testing.T) {
 }
 
 func TestGetTotalDeaths(t *testing.T) {
-	result, err := covid.GetTotalDeaths()
+	result, err := GetTotalDeaths()
 	if err != nil {
 		fmt.Println(err)
 	}

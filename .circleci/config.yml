@@ -4,11 +4,10 @@ orbs:
 jobs:
   build:
     working_directory: ~/go-covid
-    machine:
-      environment:
-        GOROOT: ""
-        PATH: "/usr/local/go/bin:/usr/local/go-covid/bin:~/.go-covid/bin:${PATH}"
-        GOPATH: "${HOME}/.go-covid:/usr/local/go-covid:${HOME}/.go_project"
+    environment:
+      GOROOT: ""
+      PATH: "/usr/local/go/bin:/usr/local/go-covid/bin:~/.go-covid/bin:${PATH}"
+      GOPATH: "${HOME}/.go-covid:/usr/local/go-covid:${HOME}/.go_project"
     docker:
       - image: circleci/golang:1.11
     steps:

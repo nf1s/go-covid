@@ -11,6 +11,10 @@ import (
 	"strings"
 )
 
+var BaseUrl = "https://services1.arcgis.com"
+
+var Path = "/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query"
+
 type Response struct {
 	Values []Case `json:"features"`
 }
@@ -49,8 +53,8 @@ type Stats struct {
 }
 
 func getAllUrl() string {
-	_url, _ := url.Parse("https://services1.arcgis.com")
-	_url.Path += "/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query"
+	_url, _ := url.Parse(BaseUrl)
+	_url.Path += Path
 	parameters := url.Values{}
 	parameters.Add("f", "json")
 	parameters.Add("where", "Confirmed > 0")
@@ -66,8 +70,8 @@ func getAllUrl() string {
 }
 
 func getCountryUrl(id int) string {
-	_url, _ := url.Parse("https://services1.arcgis.com")
-	_url.Path += "/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query"
+	_url, _ := url.Parse(BaseUrl)
+	_url.Path += Path
 	parameters := url.Values{}
 	parameters.Add("f", "json")
 	parameters.Add("where", "OBJECTID ="+strconv.Itoa(id))
@@ -83,8 +87,8 @@ func getCountryUrl(id int) string {
 }
 
 func getTotalUrl(field string) string {
-	_url, _ := url.Parse("https://services1.arcgis.com")
-	_url.Path += "/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query"
+	_url, _ := url.Parse(BaseUrl)
+	_url.Path += Path
 	parameters := url.Values{}
 	parameters.Add("f", "json")
 	parameters.Add("where", "Confirmed > 0")

@@ -53,8 +53,8 @@ type Stats struct {
 }
 
 func getAllUrl() string {
-	_url, _ := url.Parse(BaseUrl)
-	_url.Path += Path
+	u, _ := url.Parse(BaseUrl)
+	u.Path += Path
 	parameters := url.Values{}
 	parameters.Add("f", "json")
 	parameters.Add("where", "Confirmed > 0")
@@ -65,13 +65,13 @@ func getAllUrl() string {
 	parameters.Add("resultOffset", "0")
 	parameters.Add("resultRecordCount", "200")
 	parameters.Add("cacheHint", "true")
-	_url.RawQuery = parameters.Encode()
-	return _url.String()
+	u.RawQuery = parameters.Encode()
+	return u.String()
 }
 
 func getCountryUrl(id int) string {
-	_url, _ := url.Parse(BaseUrl)
-	_url.Path += Path
+	u, _ := url.Parse(BaseUrl)
+	u.Path += Path
 	parameters := url.Values{}
 	parameters.Add("f", "json")
 	parameters.Add("where", "OBJECTID ="+strconv.Itoa(id))
@@ -82,13 +82,13 @@ func getCountryUrl(id int) string {
 	parameters.Add("resultOffset", "0")
 	parameters.Add("resultRecordCount", "200")
 	parameters.Add("cacheHint", "true")
-	_url.RawQuery = parameters.Encode()
-	return _url.String()
+	u.RawQuery = parameters.Encode()
+	return u.String()
 }
 
 func getTotalUrl(field string) string {
-	_url, _ := url.Parse(BaseUrl)
-	_url.Path += Path
+	u, _ := url.Parse(BaseUrl)
+	u.Path += Path
 	parameters := url.Values{}
 	parameters.Add("f", "json")
 	parameters.Add("where", "Confirmed > 0")
@@ -97,8 +97,8 @@ func getTotalUrl(field string) string {
 	parameters.Add("outFields", "*")
 	parameters.Add("outStatistics", fmt.Sprintf("[{\"statisticType\":\"sum\",\"onStatisticField\":\"%s\",\"outStatisticFieldName\":\"value\"}]", field))
 	parameters.Add("cacheHint", "true")
-	_url.RawQuery = parameters.Encode()
-	return _url.String()
+	u.RawQuery = parameters.Encode()
+	return u.String()
 }
 
 // GetData returns the entire data of every country
